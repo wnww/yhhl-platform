@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhhl.activity.dao.BusinessActivityMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.yhhl.activity.model.BusinessActivity" >
+	<result column="tx_id" property="txId"/>
+	<result column="state" property="state"/>
+	<result column="account_trans_state" property="accountTransState"/>
+	<result column="gmt_create" property="gmtCreate"/>
+	<result column="gmt_modified" property="gmtModified"/>
+	<result column="propagation" property="propagation"/>
+</resultMap>
+       
+<!-- business_activity table all fields -->
+<sql id="Base_Column_List" >
+	 tx_id,state,account_trans_state,gmt_create,gmt_modified,propagation
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="whereBusinessActivityClause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="txId != null and txId != ''" >
+	    and tx_id =  #{txId}
+	</if>
+	<if test="state != null and state != ''" >
+	    and state =  #{state}
+	</if>
+	<if test="accountTransState != null and accountTransState != ''" >
+	    and account_trans_state =  #{accountTransState}
+	</if>
+	<if test="gmtCreate != null and gmtCreate != ''" >
+	    and gmt_create =  #{gmtCreate}
+	</if>
+	<if test="gmtModified != null and gmtModified != ''" >
+	    and gmt_modified =  #{gmtModified}
+	</if>
+	<if test="propagation != null and propagation != ''" >
+	    and propagation =  #{propagation}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="com.yhhl.activity.model.BusinessActivity" >
+  insert into business_activity (tx_id,state,account_trans_state,gmt_create,gmt_modified,propagation)
+ values(#{txId, jdbcType=VARCHAR},#{state, jdbcType=VARCHAR},#{accountTransState, jdbcType=VARCHAR},#{gmtCreate, jdbcType=TIMESTAMP},#{gmtModified, jdbcType=TIMESTAMP},#{propagation, jdbcType=VARCHAR})
+</insert>
+
+<!-- 根据id，修改记�?->  
+ <update id="updateByPrimaryKey" parameterType="com.yhhl.activity.model.BusinessActivity" >
+  update business_activity set tx_id=#{txId, jdbcType=VARCHAR},state=#{state, jdbcType=VARCHAR},account_trans_state=#{accountTransState, jdbcType=VARCHAR},gmt_create=#{gmtCreate, jdbcType=TIMESTAMP},gmt_modified=#{gmtModified, jdbcType=TIMESTAMP},propagation=#{propagation, jdbcType=VARCHAR} where tx_id=#{txId}
+ </update>
+ 
+ <!-- 修改记录，只修改只不为空的字�?-->
+<update id="updateByPrimaryKeySelective" parameterType="com.yhhl.activity.model.BusinessActivity" >
+	update business_activity set 
+	<trim  suffixOverrides="," >
+	<if test="state != null  ">
+		state=#{state, jdbcType=VARCHAR},
+	</if>
+	<if test="accountTransState != null  ">
+		account_trans_state=#{accountTransState, jdbcType=VARCHAR},
+	</if>
+	<if test="gmtCreate != null  ">
+		gmt_create=#{gmtCreate, jdbcType=TIMESTAMP},
+	</if>
+	<if test="gmtModified != null  ">
+		gmt_modified=#{gmtModified, jdbcType=TIMESTAMP},
+	</if>
+	<if test="propagation != null  ">
+		propagation=#{propagation, jdbcType=VARCHAR}
+	</if>
+	</trim> where tx_id=#{txId}
+</update>
+
+<!-- 删除记录 -->
+<delete id="deleteByPrimaryKey" parameterType="java.util.Map">
+	delete 	 from business_activity where tx_id = #{txId}
+</delete>
+ 
+<!-- 根据id查询 业务管理�?-->
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.util.Map">
+	select <include refid="Base_Column_List" /> 
+	 from business_activity where tx_id = #{txId}
+</select>
+
+<!-- 分页 data-->
+	<select useCache="false" id="getPage" resultMap="BaseResultMap" parameterType="com.yhhl.common.SearchPageUtil">
+		select <include refid="Base_Column_List"/> from business_activity
+		where 1=1
+		<trim  suffixOverrides="," >
+							<if test="object.txId != null and object.txId != ''" >
+			    and tx_id =  #{object.txId}
+			</if>
+							<if test="object.state != null and object.state != ''" >
+			    and state =  #{object.state}
+			</if>
+							<if test="object.accountTransState != null and object.accountTransState != ''" >
+			    and account_trans_state =  #{object.accountTransState}
+			</if>
+							<if test="object.gmtCreate != null and object.gmtCreate != ''" >
+			    and gmt_create =  #{object.gmtCreate}
+			</if>
+							<if test="object.gmtModified != null and object.gmtModified != ''" >
+			    and gmt_modified =  #{object.gmtModified}
+			</if>
+							<if test="object.propagation != null and object.propagation != ''" >
+			    and propagation =  #{object.propagation}
+			</if>
+			</trim>
+		<if test="orderBys!=null">
+			order by
+			<foreach collection="orderBys" item="item" open="" close=""
+				separator=",">
+				${item}
+			</foreach>
+		</if> 
+	</select>
+<!-- 分页 count -->	
+	<select useCache="false" id="getCount" parameterType="java.util.Map" resultType="int">
+     SELECT
+     count(*)
+     FROM business_activity 
+     where 1=1 
+     <trim  suffixOverrides="," >
+							<if test="txId != null and txId != ''" >
+			    and tx_id =  #{txId}
+			</if>
+							<if test="state != null and state != ''" >
+			    and state =  #{state}
+			</if>
+							<if test="accountTransState != null and accountTransState != ''" >
+			    and account_trans_state =  #{accountTransState}
+			</if>
+							<if test="gmtCreate != null and gmtCreate != ''" >
+			    and gmt_create =  #{gmtCreate}
+			</if>
+							<if test="gmtModified != null and gmtModified != ''" >
+			    and gmt_modified =  #{gmtModified}
+			</if>
+							<if test="propagation != null and propagation != ''" >
+			    and propagation =  #{propagation}
+			</if>
+			</trim>
+   	</select>
+  	
+</mapper>   

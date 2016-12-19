@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhhl.action.dao.BusinessActionMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.yhhl.action.model.BusinessAction" >
+	<result column="action_id" property="actionId"/>
+	<result column="tx_id" property="txId"/>
+	<result column="name" property="name"/>
+	<result column="state" property="state"/>
+	<result column="gmt_create" property="gmtCreate"/>
+	<result column="gmt_modified" property="gmtModified"/>
+	<result column="context" property="context"/>
+</resultMap>
+       
+<!-- business_action table all fields -->
+<sql id="Base_Column_List" >
+	 action_id,tx_id,name,state,gmt_create,gmt_modified,context
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="whereBusinessActionClause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="actionId != null and actionId != ''" >
+	    and action_id =  #{actionId}
+	</if>
+	<if test="txId != null and txId != ''" >
+	    and tx_id =  #{txId}
+	</if>
+	<if test="name != null and name != ''" >
+	    and name =  #{name}
+	</if>
+	<if test="state != null and state != ''" >
+	    and state =  #{state}
+	</if>
+	<if test="gmtCreate != null and gmtCreate != ''" >
+	    and gmt_create =  #{gmtCreate}
+	</if>
+	<if test="gmtModified != null and gmtModified != ''" >
+	    and gmt_modified =  #{gmtModified}
+	</if>
+	<if test="context != null and context != ''" >
+	    and context =  #{context}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="com.yhhl.action.model.BusinessAction" >
+  insert into business_action (action_id,tx_id,name,state,gmt_create,gmt_modified,context)
+ values(#{actionId, jdbcType=VARCHAR},#{txId, jdbcType=VARCHAR},#{name, jdbcType=VARCHAR},#{state, jdbcType=VARCHAR},#{gmtCreate, jdbcType=TIMESTAMP},#{gmtModified, jdbcType=TIMESTAMP},#{context, jdbcType=VARCHAR})
+</insert>
+
+<!-- 根据id，修改记�?->  
+ <update id="updateByPrimaryKey" parameterType="com.yhhl.action.model.BusinessAction" >
+  update business_action set action_id=#{actionId, jdbcType=VARCHAR},tx_id=#{txId, jdbcType=VARCHAR},name=#{name, jdbcType=VARCHAR},state=#{state, jdbcType=VARCHAR},gmt_create=#{gmtCreate, jdbcType=TIMESTAMP},gmt_modified=#{gmtModified, jdbcType=TIMESTAMP},context=#{context, jdbcType=VARCHAR} where action_id=#{actionId}
+ </update>
+ 
+ <!-- 修改记录，只修改只不为空的字�?-->
+<update id="updateByPrimaryKeySelective" parameterType="com.yhhl.action.model.BusinessAction" >
+	update business_action set 
+	<trim  suffixOverrides="," >
+	<if test="txId != null  ">
+		tx_id=#{txId, jdbcType=VARCHAR},
+	</if>
+	<if test="name != null  ">
+		name=#{name, jdbcType=VARCHAR},
+	</if>
+	<if test="state != null  ">
+		state=#{state, jdbcType=VARCHAR},
+	</if>
+	<if test="gmtCreate != null  ">
+		gmt_create=#{gmtCreate, jdbcType=TIMESTAMP},
+	</if>
+	<if test="gmtModified != null  ">
+		gmt_modified=#{gmtModified, jdbcType=TIMESTAMP},
+	</if>
+	<if test="context != null  ">
+		context=#{context, jdbcType=VARCHAR}
+	</if>
+	</trim> where action_id=#{actionId}
+</update>
+
+<!-- 删除记录 -->
+<delete id="deleteByPrimaryKey" parameterType="java.util.Map">
+	delete 	 from business_action where action_id = #{actionId}
+</delete>
+ 
+<!-- 根据id查询 业务管理�?-->
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.util.Map">
+	select <include refid="Base_Column_List" /> 
+	 from business_action where action_id = #{actionId}
+</select>
+
+<!-- 分页 data-->
+	<select useCache="false" id="getPage" resultMap="BaseResultMap" parameterType="com.yhhl.common.SearchPageUtil">
+		select <include refid="Base_Column_List"/> from business_action
+		where 1=1
+		<trim  suffixOverrides="," >
+							<if test="object.actionId != null and object.actionId != ''" >
+			    and action_id =  #{object.actionId}
+			</if>
+							<if test="object.txId != null and object.txId != ''" >
+			    and tx_id =  #{object.txId}
+			</if>
+							<if test="object.name != null and object.name != ''" >
+			    and name =  #{object.name}
+			</if>
+							<if test="object.state != null and object.state != ''" >
+			    and state =  #{object.state}
+			</if>
+							<if test="object.gmtCreate != null and object.gmtCreate != ''" >
+			    and gmt_create =  #{object.gmtCreate}
+			</if>
+							<if test="object.gmtModified != null and object.gmtModified != ''" >
+			    and gmt_modified =  #{object.gmtModified}
+			</if>
+							<if test="object.context != null and object.context != ''" >
+			    and context =  #{object.context}
+			</if>
+			</trim>
+		<if test="orderBys!=null">
+			order by
+			<foreach collection="orderBys" item="item" open="" close=""
+				separator=",">
+				${item}
+			</foreach>
+		</if> 
+	</select>
+<!-- 分页 count -->	
+	<select useCache="false" id="getCount" parameterType="java.util.Map" resultType="int">
+     SELECT
+     count(*)
+     FROM business_action 
+     where 1=1 
+     <trim  suffixOverrides="," >
+							<if test="actionId != null and actionId != ''" >
+			    and action_id =  #{actionId}
+			</if>
+							<if test="txId != null and txId != ''" >
+			    and tx_id =  #{txId}
+			</if>
+							<if test="name != null and name != ''" >
+			    and name =  #{name}
+			</if>
+							<if test="state != null and state != ''" >
+			    and state =  #{state}
+			</if>
+							<if test="gmtCreate != null and gmtCreate != ''" >
+			    and gmt_create =  #{gmtCreate}
+			</if>
+							<if test="gmtModified != null and gmtModified != ''" >
+			    and gmt_modified =  #{gmtModified}
+			</if>
+							<if test="context != null and context != ''" >
+			    and context =  #{context}
+			</if>
+			</trim>
+   	</select>
+  	
+</mapper>   

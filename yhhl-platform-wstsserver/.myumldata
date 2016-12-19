@@ -1,0 +1,7 @@
+#Mon Aug 15 15:11:07 CST 2016
+</attributes>=
+<attributes>=
+<project-module=type\="WEB" name\="yhhl-platform-wstsserver" id\="myeclipse.1469678965275" context-root\="/wstsserver" j2ee-spec\="1.7" archive\="yhhl-platform-wstsserver.war">
+</project-module>=
+<?xml=version\="1.0" encoding\="UTF-8"?>
+<attribute=name\="webrootdir" value\="src/main/webapp" />

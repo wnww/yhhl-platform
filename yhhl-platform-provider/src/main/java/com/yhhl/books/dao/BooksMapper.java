@@ -15,7 +15,7 @@ import com.yhhl.books.model.Books;
  * <b>功能：</b>BooksDao<br>
  * <b>作者：</b>www.cbice.com<br>
  * <b>日期：</b> June 15, 2015 <br>
- * <b>版权所有：<b>版权所有(C) 2015，国版中心<br>
+ * 
  */
 public interface BooksMapper {
 	
